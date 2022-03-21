@@ -1,11 +1,13 @@
 import './App.css';
+import React, { Component } from 'react';
 
-function App() {
-  return (
-    <>
-    <h1>This is the NewsPanda</h1>
-    </>
-  );
+export default class App extends Component {
+  render() {
+    return (
+      <div>
+        
+      </div>
+    );
+  }
 }
 
-export default App;
