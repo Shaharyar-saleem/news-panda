@@ -1,5 +1,6 @@
 import React, { Component, useState } from 'react';
 import NewsItem from './NewsItem';
+import PlaceHolderImg from '../img/placeholder-image.jpg';
 
 
 export class News extends Component {
@@ -23,7 +24,7 @@ export class News extends Component {
     }
   render() {
     const customContainer = {
-        width: '80%',
+        width: '70%',
         margin: '0 auto',
     }
     return (
@@ -32,8 +33,8 @@ export class News extends Component {
             <div className="row">
                 {
                 this.state.articles ? this.state.articles.map((article, key)=>{
-                   return <div className="col-md-3 mt-4" key={key}>
-                            <NewsItem title={article.title} description={article.description} imageUrl={article.urlToImage}/>
+                   return <div className="col-md-3 mt-5" key={key}>
+                            <NewsItem title={article.title ? article.title.slice(0,55) : ''} description={article.description ? article.description.slice(0,120) : ''} imageUrl={article.urlToImage ? article.urlToImage : PlaceHolderImg} detailUrl={article.url ? article.url : ''} />
                           </div>
                 }) : ''
             }
