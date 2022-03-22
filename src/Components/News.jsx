@@ -7,20 +7,39 @@ export class News extends Component {
     // 4053b8b400004c86982aebd728731683  //News API key
 
     constructor() {
+        console.log("i am a constructor")
         super()
         this.state = {
-           articles: this.articles,
+           articles: '',
            loading: false,
+           page: 1,
         }
     }
 
-    async componentDidMount() {
-        const url = "https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=4053b8b400004c86982aebd728731683";
+    handleNext = async () => {
+        this.setState({page: this.state.page + 1 })
+        const url = `https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=4053b8b400004c86982aebd728731683&page=${this.state.page}`;
+        console.log("API:", url)
         let data = await fetch(url)
         let fetchedData = await data.json()
-        console.log("cmd data:",fetchedData.articles)
         this.setState({articles: fetchedData.articles})
-        console.log("state value", this.state.articles)
+    }
+    
+    handlePrevious = async () => {
+        this.state.page > 1 ? this.setState({page: this.state.page - 1 }) : this.setState({page: 1})
+        const url = `https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=4053b8b400004c86982aebd728731683&page=${this.state.page}`;
+        console.log("API:", url)
+        let data = await fetch(url)
+        let fetchedData = await data.json()
+        this.setState({articles: fetchedData.articles})
+    }
+
+    async componentDidMount() {
+        const url = `https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=4053b8b400004c86982aebd728731683&page=${this.state.page}`;
+        console.log("API:", url)
+        let data = await fetch(url)
+        let fetchedData = await data.json()
+        this.setState({articles: fetchedData.articles})
     }
   render() {
     const customContainer = {
@@ -38,6 +57,10 @@ export class News extends Component {
                           </div>
                 }) : ''
             }
+            </div>
+            <div className="d-flex justify-content-center my-5">
+                <button disabled={this.state.page == 1 ? true : false} className="btn btn-lg btn-outline-success mx-3 px-4" onClick={this.handlePrevious}>&laquo; Previous</button>
+                <button className="btn btn-lg btn-outline-success mx-3 px-5" onClick={this.handleNext}>Next &raquo;</button>
             </div>
       </div>
     )
