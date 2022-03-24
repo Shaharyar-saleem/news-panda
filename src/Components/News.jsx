@@ -19,8 +19,10 @@ export class News extends Component {
     }
 
     handleNext = async () => {
-        this.setState({page: this.state.page + 1 })
+        console.log("test 1:", this.state.page)
+        this.setState({page: this.state.page += 1 })
         const url = `https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=4053b8b400004c86982aebd728731683&pageSize=16&page=${this.state.page}`;
+        console.log("test 2", this.state.page)
         console.log("API:", url)
         let data = await fetch(url)
         let fetchedData = await data.json()
@@ -28,8 +30,9 @@ export class News extends Component {
     }
     
     handlePrevious = async () => {
-        this.state.page > 1 ? this.setState({page: this.state.page - 1 }) : this.setState({page: 1})
+        this.setState({page: this.state.page -= 1 })
         const url = `https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=4053b8b400004c86982aebd728731683&pageSize=16&page=${this.state.page}`;
+        console.log("previous called", this.state.page)
         console.log("API:", url)
         let data = await fetch(url)
         let fetchedData = await data.json()
@@ -42,7 +45,6 @@ export class News extends Component {
         let data = await fetch(url)
         let fetchedData = await data.json()
         this.setState({articles: fetchedData.articles, totalArticles: fetchedData.totalResults, maxPages: fetchedData.totalResults / 12})
-        console.log("max pages:", this.state.maxPages)
     }
   render() {
     const customContainer = {
@@ -63,7 +65,7 @@ export class News extends Component {
             </div>
             <div className="d-flex justify-content-center my-5">
                 <button disabled={this.state.page == 1 ? true : false} className="btn btn-lg btn-outline-success mx-3 px-4" onClick={this.handlePrevious}>&laquo; Previous</button>
-                <button disabled={this.state.page >= this.state.maxPages ? true : false} className="btn btn-lg btn-outline-success mx-3 px-5" onClick={this.handleNext}>Next &raquo;</button>
+                <button disabled={this.state.page >= Math.floor(this.state.maxPages) ? true : false} className="btn btn-lg btn-outline-success mx-3 px-5" onClick={this.handleNext}>Next &raquo;</button>
             </div>
       </div>
     )
