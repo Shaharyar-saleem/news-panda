@@ -21,7 +21,7 @@ export class News extends Component {
     handleNext = async () => {
         console.log("test 1:", this.state.page)
         this.setState({page: this.state.page += 1 })
-        const url = `https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=4053b8b400004c86982aebd728731683&pageSize=${this.props.pageSize}&page=${this.state.page}`;
+        const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apiKey}&pageSize=${this.props.pageSize}&page=${this.state.page}`;
         this.setState({loading: true})
         let data = await fetch(url)
         let fetchedData = await data.json()
@@ -30,7 +30,7 @@ export class News extends Component {
     
     handlePrevious = async () => {
         this.setState({page: this.state.page -= 1 })
-        const url = `https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=4053b8b400004c86982aebd728731683&pageSize=${this.props.pageSize}&page=${this.state.page}`;
+        const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apiKey}&pageSize=${this.props.pageSize}&page=${this.state.page}`;
         this.setState({loading: true})
         let data = await fetch(url)
         let fetchedData = await data.json()
@@ -38,7 +38,7 @@ export class News extends Component {
     }
 
     async componentDidMount() {
-        const url = `https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=4053b8b400004c86982aebd728731683&pageSize=${this.props.pageSize}&page=${this.state.page}`;
+        const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apiKey}&pageSize=${this.props.pageSize}&page=${this.state.page}`;
         this.setState({loading: true})
         console.log("API:", url)
         let data = await fetch(url)
