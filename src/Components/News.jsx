@@ -50,9 +50,14 @@ export class News extends Component {
         width: '75%',
         margin: '0 auto',
     }
+    const toUpperCase = (word)=>{
+       const firstLetter = word.slice(0,1).toUpperCase()
+       const lowerLetters = word.slice(1,word.length).toLowerCase();
+       return firstLetter + lowerLetters
+    }
     return (
         <div className="my-5" style={customContainer}>
-            <h2 className="text-center" style={{paddingBottom: '20px', paddingTop: '20px'}}>News Panda - latest News</h2>
+            <h2 className="text-center" style={{paddingBottom: '16px', paddingTop: '70px', fontSize: '40px', letterSpacing: '5.5px'}}>News Panda - {toUpperCase(this.props.category)} News</h2>
             {this.state.loading && <Loading width={40} height={40} />}
             <div className="row">
                 {
