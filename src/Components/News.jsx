@@ -1,7 +1,7 @@
 import React, { Component, useState } from 'react';
 import NewsItem from './NewsItem';
 import PlaceHolderImg from '../img/placeholder-image.jpg';
-
+import Loading from './Loading.jsx';
 
 export class News extends Component {
     // 4053b8b400004c86982aebd728731683  //News API key
@@ -22,25 +22,28 @@ export class News extends Component {
         console.log("test 1:", this.state.page)
         this.setState({page: this.state.page += 1 })
         const url = `https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=4053b8b400004c86982aebd728731683&pageSize=${this.props.pageSize}&page=${this.state.page}`;
+        this.setState({loading: true})
         let data = await fetch(url)
         let fetchedData = await data.json()
-        this.setState({articles: fetchedData.articles, totalArticles: fetchedData.totalResults})
+        this.setState({articles: fetchedData.articles, totalArticles: fetchedData.totalResults, loading: false})
     }
     
     handlePrevious = async () => {
         this.setState({page: this.state.page -= 1 })
         const url = `https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=4053b8b400004c86982aebd728731683&pageSize=${this.props.pageSize}&page=${this.state.page}`;
+        this.setState({loading: true})
         let data = await fetch(url)
         let fetchedData = await data.json()
-        this.setState({articles: fetchedData.articles, totalArticles: fetchedData.totalResults})
+        this.setState({articles: fetchedData.articles, totalArticles: fetchedData.totalResults, loading: false})
     }
 
     async componentDidMount() {
         const url = `https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=4053b8b400004c86982aebd728731683&pageSize=${this.props.pageSize}&page=${this.state.page}`;
+        this.setState({loading: true})
         console.log("API:", url)
         let data = await fetch(url)
         let fetchedData = await data.json()
-        this.setState({articles: fetchedData.articles, totalArticles: fetchedData.totalResults, maxPages: fetchedData.totalResults / 12})
+        this.setState({articles: fetchedData.articles, totalArticles: fetchedData.totalResults, maxPages: fetchedData.totalResults / this.props.pageSize, loading: false})
     }
   render() {
     const customContainer = {
@@ -49,9 +52,11 @@ export class News extends Component {
     }
     return (
         <div className="my-5" style={customContainer}>
-            <h2 className="text-center">News Panda - latest News</h2>
+            <h2 className="text-center" style={{paddingBottom: '20px', paddingTop: '20px'}}>News Panda - latest News</h2>
+            {this.state.loading && <Loading width={40} height={40} />}
             <div className="row">
                 {
+                    !this.state.loading &&
                 this.state.articles ? this.state.articles.map((article, key)=>{
                    return <div className="col-md-3 mt-5" key={key}>
                             <NewsItem title={article.title ? article.title.slice(0,55) : ''} description={article.description ? article.description.slice(0,120) : ''} imageUrl={article.urlToImage ? article.urlToImage : PlaceHolderImg} detailUrl={article.url ? article.url : ''} />
