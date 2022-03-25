@@ -21,9 +21,7 @@ export class News extends Component {
     handleNext = async () => {
         console.log("test 1:", this.state.page)
         this.setState({page: this.state.page += 1 })
-        const url = `https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=4053b8b400004c86982aebd728731683&pageSize=16&page=${this.state.page}`;
-        console.log("test 2", this.state.page)
-        console.log("API:", url)
+        const url = `https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=4053b8b400004c86982aebd728731683&pageSize=${this.props.pageSize}&page=${this.state.page}`;
         let data = await fetch(url)
         let fetchedData = await data.json()
         this.setState({articles: fetchedData.articles, totalArticles: fetchedData.totalResults})
@@ -31,16 +29,14 @@ export class News extends Component {
     
     handlePrevious = async () => {
         this.setState({page: this.state.page -= 1 })
-        const url = `https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=4053b8b400004c86982aebd728731683&pageSize=16&page=${this.state.page}`;
-        console.log("previous called", this.state.page)
-        console.log("API:", url)
+        const url = `https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=4053b8b400004c86982aebd728731683&pageSize=${this.props.pageSize}&page=${this.state.page}`;
         let data = await fetch(url)
         let fetchedData = await data.json()
         this.setState({articles: fetchedData.articles, totalArticles: fetchedData.totalResults})
     }
 
     async componentDidMount() {
-        const url = `https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=4053b8b400004c86982aebd728731683&pageSize=16&page=${this.state.page}`;
+        const url = `https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=4053b8b400004c86982aebd728731683&pageSize=${this.props.pageSize}&page=${this.state.page}`;
         console.log("API:", url)
         let data = await fetch(url)
         let fetchedData = await data.json()
@@ -48,7 +44,7 @@ export class News extends Component {
     }
   render() {
     const customContainer = {
-        width: '70%',
+        width: '75%',
         margin: '0 auto',
     }
     return (
