@@ -2,9 +2,25 @@ import React, { Component, useState } from 'react';
 import NewsItem from './NewsItem';
 import PlaceHolderImg from '../img/placeholder-image.jpg';
 import Loading from './Loading.jsx';
+import PropTypes from 'prop-types';
+
 
 export class News extends Component {
     // 4053b8b400004c86982aebd728731683  //News API key
+
+    static defaultProps = {
+        country: 'us',
+        apiKey: '4053b8b400004c86982aebd728731683',
+        category: 'general',
+        pageSize: 12,
+    }
+
+    static propTypes = {
+       country: PropTypes.string,
+       apiKey: PropTypes.string,
+       category: PropTypes.string,
+       pageSize: PropTypes.number,
+    }
 
     constructor() {
         console.log("i am a constructor")
