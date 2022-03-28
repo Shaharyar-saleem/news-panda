@@ -23,7 +23,6 @@ export class News extends Component {
     }
 
     constructor() {
-        console.log("i am a constructor")
         super()
         this.state = {
            articles: '',
@@ -34,32 +33,26 @@ export class News extends Component {
         }
     }
 
-    handleNext = async () => {
-        console.log("test 1:", this.state.page)
-        this.setState({page: this.state.page += 1 })
+    updateContent= async () => {
         const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apiKey}&pageSize=${this.props.pageSize}&page=${this.state.page}`;
         this.setState({loading: true})
         let data = await fetch(url)
         let fetchedData = await data.json()
-        this.setState({articles: fetchedData.articles, totalArticles: fetchedData.totalResults, loading: false})
+        this.setState({articles: fetchedData.articles, totalArticles: fetchedData.totalResults, maxPages: fetchedData.totalResults / this.props.pageSize, loading: false})
+    }
+
+    handleNext = async () => {
+        this.setState({page: this.state.page += 1 })
+        this.updateContent()
     }
     
     handlePrevious = async () => {
         this.setState({page: this.state.page -= 1 })
-        const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apiKey}&pageSize=${this.props.pageSize}&page=${this.state.page}`;
-        this.setState({loading: true})
-        let data = await fetch(url)
-        let fetchedData = await data.json()
-        this.setState({articles: fetchedData.articles, totalArticles: fetchedData.totalResults, loading: false})
+        this.updateContent()
     }
 
     async componentDidMount() {
-        const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apiKey}&pageSize=${this.props.pageSize}&page=${this.state.page}`;
-        this.setState({loading: true})
-        console.log("API:", url)
-        let data = await fetch(url)
-        let fetchedData = await data.json()
-        this.setState({articles: fetchedData.articles, totalArticles: fetchedData.totalResults, maxPages: fetchedData.totalResults / this.props.pageSize, loading: false})
+        this.updateContent()
     }
   render() {
     const customContainer = {
