@@ -63,7 +63,7 @@ export class News extends Component {
     }
   render() {
     const customContainer = {
-        width: '75%',
+        width: '85%',
         margin: '0 auto',
     }
     const toUpperCase = (word)=>{
@@ -79,8 +79,8 @@ export class News extends Component {
                 {
                     !this.state.loading &&
                 this.state.articles ? this.state.articles.map((article, key)=>{
-                   return <div className="col-md-3 mt-5" key={key}>
-                            <NewsItem title={article.title ? article.title.slice(0,55) : ''} description={article.description ? article.description.slice(0,120) : ''} imageUrl={article.urlToImage ? article.urlToImage : PlaceHolderImg} detailUrl={article.url ? article.url : ''} />
+                   return <div className="col-md-4 mt-5 pt-3" key={key}>
+                            <NewsItem title={article.title ? article.title.slice(0,100) : ''} description={article.description ? article.description.slice(0,150) : ''} imageUrl={article.urlToImage ? article.urlToImage : PlaceHolderImg} detailUrl={article.url ? article.url : ''} publishDate={article.publishedAt} author={article.author} source={article.source.name} />
                           </div>
                 }) : ''
             }
