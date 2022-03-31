@@ -39,6 +39,12 @@ export class News extends Component {
         let data = await fetch(url)
         let fetchedData = await data.json()
         this.setState({articles: fetchedData.articles, totalArticles: fetchedData.totalResults, maxPages: fetchedData.totalResults / this.props.pageSize, loading: false})
+        
+        document.title = `${this.captilizeString(this.props.category)} - NewsPanda`
+    }
+
+    captilizeString = (string) => {
+        return string.charAt(0).toUpperCase() + string.slice(1)
     }
 
     handleNext = async () => {
