@@ -9,7 +9,6 @@ export class News extends Component {
   // 4053b8b400004c86982aebd728731683  //News API key
 
   static defaultProps = {
-    country: "us",
     apiKey: "4053b8b400004c86982aebd728731683",
     category: "general",
     pageSize: 12,
@@ -59,7 +58,6 @@ export class News extends Component {
     this.updateContent();
   }
   fetchMoreData = async () => {
-    this.props.setProgress(10)
     this.setState({ page: this.state.page + 1 });
     const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apiKey}&pageSize=${this.props.pageSize}&page=${this.state.page}`;
     this.setState({ loading: true });

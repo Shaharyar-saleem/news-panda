@@ -1,9 +1,13 @@
-import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import React, { Component } from 'react';
 
-function NavBar() {
-  return (
-    <div>
+export default class NavBar extends Component {
+  setCountryValue = (event) => { 
+    this.props.setCountry(event.target.value)
+  }
+  render() {
+    return (
+      <div>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div className="container-fluid">
           <Link className="navbar-brand" to="/">
@@ -58,13 +62,23 @@ function NavBar() {
                 Technology
                 </Link>
               </li>
-   
             </ul>
+            <form className="d-flex">
+              <select className="form-control" onChange={this.setCountryValue}>
+                <option value="us">USA</option>
+                <option value="in">India</option>
+                <option value="nz">New Zeland</option>
+                <option value="ru">Russia</option>
+                <option value="de">Germany</option>
+                <option value="gk">Greek</option>
+                <option value="ae">UAE</option>
+              </select>
+            </form>
           </div>
         </div>
       </nav>
     </div>
-  );
+    );
+  }
 }
 
-export default NavBar;
