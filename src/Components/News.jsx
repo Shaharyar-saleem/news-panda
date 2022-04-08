@@ -34,17 +34,20 @@ export class News extends Component {
   }
 
   updateContent = async () => {
+    this.props.setProgress(10)
     const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apiKey}&pageSize=${this.props.pageSize}&page=${this.state.page}`;
-    this.setState({ loading: true });
-    let data = await fetch(url);
-    let fetchedData = await data.json();
+    this.setState({ loading: true })
+    let data = await fetch(url)
+    this.props.setProgress(30)
+    let fetchedData = await data.json()
+    this.props.setProgress(50)
     this.setState({
       articles: fetchedData.articles,
       totalArticles: fetchedData.totalResults,
       maxPages: fetchedData.totalResults / this.props.pageSize,
       loading: false,
     });
-
+    this.props.setProgress(100)
     document.title = `${this.captilizeString(this.props.category)} - NewsPanda`;
   };
 
@@ -56,18 +59,19 @@ export class News extends Component {
     this.updateContent();
   }
   fetchMoreData = async () => {
-    this.setState({ page: this.state.page + 1 })
-    const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apiKey}&pageSize=${this.props.pageSize}&page=${this.state.page}`
-    this.setState({ loading: true })
-    let data = await fetch(url)
-    let fetchedData = await data.json()
-    console.log("API URL:", url)
+    this.props.setProgress(10)
+    this.setState({ page: this.state.page + 1 });
+    const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apiKey}&pageSize=${this.props.pageSize}&page=${this.state.page}`;
+    this.setState({ loading: true });
+    let data = await fetch(url);
+    let fetchedData = await data.json();
+    console.log("API URL:", url);
     this.setState({
       articles: this.state.articles.concat(fetchedData.articles),
       loading: false,
       totalArticles: fetchedData.totalResults,
-    })
-  }
+    });
+  };
 
   render() {
     const customContainer = {
@@ -101,32 +105,34 @@ export class News extends Component {
             loader={<Loading width={40} height={40} />}
           >
             <div style={customContainer}>
-            <div className="row">
-              {this.state.articles &&
-                this.state.articles.map((article, key) => {
-                  return (
-                    <div className="col-md-4 mt-5 pt-3" key={key}>
-                      <NewsItem
-                        title={article.title ? article.title.slice(0, 100) : ""}
-                        description={
-                          article.description
-                            ? article.description.slice(0, 150)
-                            : ""
-                        }
-                        imageUrl={
-                          article.urlToImage
-                            ? article.urlToImage
-                            : PlaceHolderImg
-                        }
-                        detailUrl={article.url ? article.url : ""}
-                        publishDate={article.publishedAt}
-                        author={article.author}
-                        source={article.source.name}
-                      />
-                    </div>
-                  );
-                })}
-            </div>
+              <div className="row">
+                {this.state.articles &&
+                  this.state.articles.map((article, key) => {
+                    return (
+                      <div className="col-md-4 mt-5 pt-3" key={key}>
+                        <NewsItem
+                          title={
+                            article.title ? article.title.slice(0, 100) : ""
+                          }
+                          description={
+                            article.description
+                              ? article.description.slice(0, 150)
+                              : ""
+                          }
+                          imageUrl={
+                            article.urlToImage
+                              ? article.urlToImage
+                              : PlaceHolderImg
+                          }
+                          detailUrl={article.url ? article.url : ""}
+                          publishDate={article.publishedAt}
+                          author={article.author}
+                          source={article.source.name}
+                        />
+                      </div>
+                    );
+                  })}
+              </div>
             </div>
           </InfiniteScroll>
         }
