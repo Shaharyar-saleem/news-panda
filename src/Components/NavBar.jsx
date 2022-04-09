@@ -1,9 +1,9 @@
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import React, { Component } from 'react';
 
-const NavBar = () => {
+const NavBar = (props) => {
   const setCountryValue = (event) => { 
-    this.props.setCountry(event.target.value)
+    props.setCountry(event.target.value)
   }
     return (
       <div>
