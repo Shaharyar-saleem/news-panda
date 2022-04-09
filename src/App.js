@@ -28,19 +28,23 @@ export default class App extends Component {
     pageSize: 12,
   }
 
+  apiKey = process.env.REACT_APP_NEWS_API_KEY
+  
+
   render() {
+    console.log("apiKey:", this.apiKey)
     return (
       <div>
          <LoadingBar color='#c91f1fd1' progress={this.state.progres} height={3} />
          <NavBar setCountry={this.setCountry} />
           <Routes>
-            <Route path="/" exact element={<News setProgress={this.setProgress} key={this.state.country} pageSize={this.newsProps.pageSize} country={this.state.country} category={"general"} />} />
-            <Route path="/business" exact element={<News setProgress={this.setProgress} key="business" pageSize={this.newsProps.pageSize} country={this.state.country} category={"business"} />} />
-            <Route path="/entertainment" exact element={<News setProgress={this.setProgress} key="entertainment" pageSize={this.newsProps.pageSize} country={this.state.country} category={"entertainment"} />} />
-            <Route path="/health" exact element={<News setProgress={this.setProgress} key="health" pageSize={this.newsProps.pageSize} country={this.state.country} category={"health"} />} />
-            <Route path="/science" exact element={<News setProgress={this.setProgress} key="science" pageSize={this.newsProps.pageSize} country={this.state.country} category={"science"} />} />
-            <Route path="/sports" exact element={<News setProgress={this.setProgress} key="sports" pageSize={this.newsProps.pageSize} country={this.state.country} category={"sports"} />} />
-            <Route path="/technology" exact element={<News setProgress={this.setProgress} key="technology" pageSize={this.newsProps.pageSize} country={this.state.country} category={"technology"} />} />
+            <Route path="/" exact element={<News setProgress={this.setProgress} key={this.state.country} pageSize={this.newsProps.pageSize} country={this.state.country} apiKey={this.apiKey} category={"general"} />} />
+            <Route path="/business" exact element={<News setProgress={this.setProgress} key="business" pageSize={this.newsProps.pageSize} country={this.state.country} apiKey={this.apiKey} category={"business"} />} />
+            <Route path="/entertainment" exact element={<News setProgress={this.setProgress} key="entertainment" pageSize={this.newsProps.pageSize} country={this.state.country} apiKey={this.apiKey} category={"entertainment"} />} />
+            <Route path="/health" exact element={<News setProgress={this.setProgress} key="health" pageSize={this.newsProps.pageSize} country={this.state.country} apiKey={this.apiKey} category={"health"} />} />
+            <Route path="/science" exact element={<News setProgress={this.setProgress} key="science" pageSize={this.newsProps.pageSize} country={this.state.country} apiKey={this.apiKey} category={"science"} />} />
+            <Route path="/sports" exact element={<News setProgress={this.setProgress} key="sports" pageSize={this.newsProps.pageSize} country={this.state.country} apiKey={this.apiKey} category={"sports"} />} />
+            <Route path="/technology" exact element={<News setProgress={this.setProgress} key="technology" pageSize={this.newsProps.pageSize} country={this.state.country} apiKey={this.apiKey} category={"technology"} />} />
           </Routes>
       </div>
     );

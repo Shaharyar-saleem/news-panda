@@ -72,6 +72,7 @@ export default class NavBar extends Component {
                 <option value="de">Germany</option>
                 <option value="gk">Greek</option>
                 <option value="ae">UAE</option>
+                <option value="tr">Turkey</option>
               </select>
             </form>
           </div>

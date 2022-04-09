@@ -9,7 +9,6 @@ export class News extends Component {
   // 4053b8b400004c86982aebd728731683  //News API key
 
   static defaultProps = {
-    apiKey: "4053b8b400004c86982aebd728731683",
     category: "general",
     pageSize: 12,
   };
@@ -35,6 +34,7 @@ export class News extends Component {
   updateContent = async () => {
     this.props.setProgress(10)
     const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apiKey}&pageSize=${this.props.pageSize}&page=${this.state.page}`;
+    console.log("api url:", url)
     this.setState({ loading: true })
     let data = await fetch(url)
     this.props.setProgress(30)
@@ -60,6 +60,7 @@ export class News extends Component {
   fetchMoreData = async () => {
     this.setState({ page: this.state.page + 1 });
     const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apiKey}&pageSize=${this.props.pageSize}&page=${this.state.page}`;
+    console.log("api url:", url)
     this.setState({ loading: true });
     let data = await fetch(url);
     let fetchedData = await data.json();
@@ -73,7 +74,7 @@ export class News extends Component {
 
   render() {
     const customContainer = {
-      width: "85%",
+      width: "90%",
       margin: "0 auto",
     };
     const toUpperCase = (word) => {
@@ -114,7 +115,7 @@ export class News extends Component {
                           }
                           description={
                             article.description
-                              ? article.description.slice(0, 150)
+                              ? article.description.slice(0, 100)
                               : ""
                           }
                           imageUrl={
