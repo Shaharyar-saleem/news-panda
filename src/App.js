@@ -19,9 +19,7 @@ export default class App extends Component {
   }
 
   setCountry = (country) => {
-    console.log("enterted country:", country)
     this.setState({ country: country})
-    console.log("state country:", this.state.country)
   }
 
   newsProps = {

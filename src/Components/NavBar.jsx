@@ -1,11 +1,10 @@
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import React, { Component } from 'react';
 
-export default class NavBar extends Component {
-  setCountryValue = (event) => { 
+const NavBar = () => {
+  const setCountryValue = (event) => { 
     this.props.setCountry(event.target.value)
   }
-  render() {
     return (
       <div>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -64,7 +63,7 @@ export default class NavBar extends Component {
               </li>
             </ul>
             <form className="d-flex">
-              <select className="form-control" onChange={this.setCountryValue}>
+              <select className="form-control" onChange={setCountryValue}>
                 <option value="us">USA</option>
                 <option value="in">India</option>
                 <option value="nz">New Zeland</option>
@@ -80,6 +79,6 @@ export default class NavBar extends Component {
       </nav>
     </div>
     );
-  }
 }
 
+export default NavBar;
