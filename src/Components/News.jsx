@@ -48,8 +48,9 @@ const News = (props) => {
   };
 
   useEffect(() => {
+    console.log("use Effect is called")
     updateContent();
-  }, []);
+  }, [props.country]);
 
   const fetchMoreData = async () => {
     setPage(page+1)
